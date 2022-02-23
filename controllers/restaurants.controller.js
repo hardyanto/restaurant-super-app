@@ -11,7 +11,10 @@ const pool = new Pool({
 const pgp = require('pg-promise')(/* options */)
 const db = pgp('postgres://hardy@localhost:5432/hardy')
 
-/* List all restaurants that are open at a certain datetime */
+/* List all restaurants that are open at a certain datetime 
+  Where day is Mon, Tues, Weds, Thurs, Fri, Sat or Sun
+  And datetime in the format of hh:mm in the 24 hour format.. e.g 09:00 or 13:00
+*/
 exports.getOpenRestaurants = async (req, res, next) => {
   if (!req.query.day || !req.query.time) {
     next();
