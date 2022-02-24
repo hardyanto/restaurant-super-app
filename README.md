@@ -32,6 +32,7 @@ Once you run the above command, our server would be started and run.
 ###### Testing endpoints on postman
 We recommend **postman** to test the endpoints. Please install postman if you don't have one or you can use the online version.
 
+###### Documentation: https://documenter.getpostman.com/view/19748821/UVkpMaKA 
 
-
+![Alt text](images/restaurantSuperApp-database-design.png "DB Design")
 
