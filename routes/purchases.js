@@ -12,11 +12,9 @@ const pool = new Pool({
 
 const pgp = require('pg-promise')(/* options */)
 const db = pgp('postgres://hardy@localhost:5432/hardy')
-const restaurantsController = require('../controllers/restaurants.controller');
+const purchasesController = require('../controllers/purchases.controller');
 
-router.get('/', restaurantsController.getOpenRestaurants);
-router.get('/', restaurantsController.getTopRestaurants);
-router.get('/', restaurantsController.search);
-router.get('/', restaurantsController.next);
+router.post('/', purchasesController.processPurchase);
+router.post('/', purchasesController.next);
 
 module.exports = router;

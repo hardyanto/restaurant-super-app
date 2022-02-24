@@ -66,5 +66,21 @@ exports.getTopRestaurants = async (req, res, next) => {
   Ranked by relevance to search term 
 */
 exports.search = async (req, res, next) => {
-  //TODO: implement search 
+  if (!req.query.name) {
+    next();
+  } else {
+    const name = req.query.name;
+    try {
+      const results =  pool.query(`SELECT * FROM restaurant, menu WHERE restaurant.restaurantName = $1 OR menu.dishName = $2`, [name, name]);
+      res.status(200).send(results.rows);
+    } catch (err) {
+      res.status(400).send({"error" : "Unexpected error occurs! Might be due to invalid input"});
+    }
+  }
+};
+
+//TODO
+// For our new next API
+exports.next = async (req, res, next) => {
+  res.status(400).send({"error" : "Unexpected error occurs! Might be due to invalid input"});
 };
