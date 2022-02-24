@@ -34,5 +34,5 @@ We recommend **postman** to test the endpoints. Please install postman if you do
 
 ###### Documentation: https://documenter.getpostman.com/view/19748821/UVkpMaKA 
 
-![Alt text](images/restaurantSuperApp-database-design.png "DB Design")
+![Alt text](public/images/restaurantSuperApp-database-design.png "DB Design")
 
