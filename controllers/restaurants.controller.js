@@ -71,7 +71,7 @@ exports.search = async (req, res, next) => {
   } else {
     const name = req.query.name;
     try {
-      const results =  pool.query(`SELECT * FROM restaurant, menu WHERE restaurant.restaurantName = $1 OR menu.dishName = $2`, [name, name]);
+      const results =  await pool.query(`SELECT * FROM restaurant, menu WHERE lower(menu.dishName) LIKE lower($1) OR lower(restaurant.restaurantName) LIKE lower($1)`, ['%' + name + '%']);
       res.status(200).send(results.rows);
     } catch (err) {
       res.status(400).send({"error" : "Unexpected error occurs! Might be due to invalid input"});
