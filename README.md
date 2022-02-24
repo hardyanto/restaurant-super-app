@@ -1,3 +1,9 @@
+# Heroku URL for this app
+https://restaurant-super-app.herokuapp.com/
+
+###### Endpoints created
+See documentation for info https://documenter.getpostman.com/view/19748821/UVkpMaKA 
+
 # Command to run the ETL (extract, transform and load) script 
 Takes in the raw data sets as input, and outputs to our postgreSQL database in Heroku.
 Please run this command on your local machine.
