@@ -13,20 +13,9 @@ const fs = require("fs");
 const path = require("path");
 
 const rawdata = fs.readFileSync(path.resolve(__dirname, "restaurants.json"));
-let temp = JSON.parse(rawdata);
-
-let restaurants = [];
-for (let i = 0; i < 2; i++) {
-  restaurants.push(temp[i]);
-}
-
+const restaurants = JSON.parse(rawdata);
 const usersWithPurchaseHistoryRawData = fs.readFileSync(path.resolve(__dirname, "users_with_purchase_history.json"));
-temp = JSON.parse(usersWithPurchaseHistoryRawData);
-
-let usersWithPurchaseHistories = [];
-for (let i = 0; i < 2; i++) {
-  usersWithPurchaseHistories.push(temp[i]);
-}
+const usersWithPurchaseHistories = JSON.parse(usersWithPurchaseHistoryRawData);
 
 /* Schema */
 async function dropSchema() {
@@ -129,9 +118,9 @@ async function insertTableQuery(query, values, tableName) {
         if (day.includes("-")) {
           dayStart = day.split("-")[0];
           dayEnd = day.split("-")[1];
-          await insertTableQuery(`INSERT INTO "opening_hours"(dayStart, dayEnd, openTime, closeTime, restaurantName)VALUES($1, $2, $3, $4, $5)`, [dayStart, dayEnd, convertedTimeHourStart, convertedTimeHourEnd, restaurantName], "opening_hours");
+          insertTableQuery(`INSERT INTO "opening_hours"(dayStart, dayEnd, openTime, closeTime, restaurantName)VALUES($1, $2, $3, $4, $5)`, [dayStart, dayEnd, convertedTimeHourStart, convertedTimeHourEnd, restaurantName], "opening_hours");
         } else {
-          await insertTableQuery(`INSERT INTO "opening_hours"(dayStart, dayEnd, openTime, closeTime, restaurantName)VALUES($1, $2, $3, $4, $5)`, [day, day, convertedTimeHourStart, convertedTimeHourEnd, restaurantName], "opening_hours");
+          insertTableQuery(`INSERT INTO "opening_hours"(dayStart, dayEnd, openTime, closeTime, restaurantName)VALUES($1, $2, $3, $4, $5)`, [day, day, convertedTimeHourStart, convertedTimeHourEnd, restaurantName], "opening_hours");
         }
       }
     }
@@ -142,7 +131,8 @@ async function insertTableQuery(query, values, tableName) {
       const price = m.price;
 
       try {
-        await insertTableQuery(`INSERT INTO "menu"(dishName, price, restaurantName)VALUES($1, $2, $3)`, [dishName, price, restaurantName], "menu");
+        insertTableQuery(`INSERT INTO "menu"(dishName, price, restaurantName)VALUES($1, $2, $3)`, [dishName, price, restaurantName], "menu");
+
       } catch (err) {
         console.log("error when inserting menu ", err);
       }
@@ -155,17 +145,17 @@ async function insertTableQuery(query, values, tableName) {
     const transactionId = userWithPurchaseHistories.id;
     const purchaseHistory = userWithPurchaseHistories.purchaseHistory;
 
-    await insertTableQuery(`INSERT INTO "user"(userName, cashBalance)VALUES($1, $2)`, [userName, cashBalance], "user");
-    
+    insertTableQuery(`INSERT INTO "user"(userName, cashBalance)VALUES($1, $2)`, [userName, cashBalance], "user");
+
     for (let eachHistory of purchaseHistory) {
       const transactionAmount = eachHistory.transactionAmount;
       const dishName = eachHistory.dishName;
       const restaurantName = eachHistory.restaurantName;
       const transactionDate = eachHistory.transactionDate;
-      await insertTableQuery(`INSERT INTO "purchase_history"(transactionId, transactionAmount, transactionDate, restaurantName, dishName)VALUES($1, $2, $3, $4, $5)`, [transactionId, transactionAmount, transactionDate, restaurantName, dishName], "purchase_history");
+      insertTableQuery(`INSERT INTO "purchase_history"(transactionId, transactionAmount, transactionDate, restaurantName, dishName)VALUES($1, $2, $3, $4, $5)`, [transactionId, transactionAmount, transactionDate, restaurantName, dishName], "purchase_history");
+
     }
   }
-
   // Means db and everything has been setup
   console.log("DONE WITH DATABASE SETUP");
 })();
