@@ -42,8 +42,5 @@ We recommend **postman** to test the endpoints. Please install postman if you do
 
 ![Alt text](public/images/restaurantSuperApp-database-design.png "DB Design")
 
-Assumption: There is no foreign key delete constraint from purchase_history with restaurant and menu as should the restaurant closed (out of business), purchase_history should still be kept for audit purpose etc.
+**Assumption: There is no foreign key delete constraint from purchase_history with restaurant and menu as should the restaurant closed (out of business), purchase_history should still be kept for audit purpose etc. Same goes for opening_hours. Even if the restaurant is out of business, we might want to keep the opening_hours for audit purpose as purchase_history does not keep track of opening hours. Username and restaurant names are unique. Just like on Instagram where usernames are unique. In addition, it is weird to have same restaurant names on the delivery app as this will cause confusion**
 
-Same goes for opening_hours. Even if the restaurant is out of business, we might want to keep the opening_hours for audit purpose as purchase_history does not keep track of opening hours.
-
-![image](https://user-images.githubusercontent.com/18643648/155514797-3a140e2a-75d8-4f61-862d-f3ac9e4d6287.png)
